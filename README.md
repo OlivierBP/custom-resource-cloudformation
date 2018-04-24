@@ -9,5 +9,5 @@ Simple example of a custom resource with CloudFormation that triggers a Lambda f
   * The Lambda Timeout should be set at 10 sec
 * Create a CloudFormation stack from customResource.yaml
 
-> Tested with Node.js 4.3
+> Tested with Node.js 4.3 for the Lambda function
 
