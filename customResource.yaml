@@ -7,16 +7,19 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: >-
   Prototype to create a custom resource with CloudFormation
 
+Parameters:
+  LambdaArn:
+    Type: String
+    # Require the ARN of the Lambda function. ex:
+    #arn:aws:lambda:eu-west-1:912175495967:function:LambdaCustomResourceSpotFleet
 
-Resources:   
-  
+Resources:
 
-  SpotFleet:
-    Type: 'Custom::SpotFleet'
+  PrototypeResource:
+    Type: 'Custom::PrototypeResource'
     Version: "1.0"
     Properties:
-      ServiceToken: arn:aws:lambda:eu-west-1:912175495967:function:LambdaCustomResourceSpotFleet
+      ServiceToken: !Ref LambdaArn
       test: testparameter
       testb:
-        testc: parameterc
-      
+        testc: parametercc

@@ -8,53 +8,58 @@
 
 'use strict';
 
-export function lambda_handler(event, context) {
+// The handler
+exports.handler = (event, context) => {
   try {
     console.log(JSON.stringify(event, null, '  '));
+
     // DELETE
     if (event.RequestType == 'Delete') {
-      deleteSpotFleet(event.ResourceProperties, function (err, result) {
+      deleteSpotFleet(event.ResourceProperties, function(err, result) {
         var status = err ? 'FAILED' : 'SUCCESS';
-        return sendResponse(event, context, "SUCCESS", result, err);
+        return sendResponse(event, context, status, result, err);
       });
     }
+
     // UPDATE
     else if (event.RequestType == 'Update') {
       // Delete first
-      deleteSpotFleet(event.ResourceProperties, function (err, result) {
-        var status = err ? 'FAILED' : 'SUCCESS';
+      deleteSpotFleet(event.ResourceProperties, function(err, result) {
         if (err)
           return sendResponse(event, context, "FAILED", result, err);
       });
       // Then create
-      createSpotFleet(event.ResourceProperties, function (err, result) {
+      createSpotFleet(event.ResourceProperties, function(err, result) {
         var status = err ? 'FAILED' : 'SUCCESS';
         return sendResponse(event, context, status, result, err);
       });
     }
+
     // CREATE
     else if (event.RequestType == 'Create') {
-      createSpotFleet(event.ResourceProperties, function (err, result) {
+      createSpotFleet(event.ResourceProperties, function(err, result) {
         var status = err ? 'FAILED' : 'SUCCESS';
         return sendResponse(event, context, status, result, err);
       });
+
     }
-    else {
+
+    else{
       return sendResponse(event, context, "FAILED", event);
     }
   }
-  catch (err) {
+  catch(err) {
     console.log("error");
     return sendResponse(event, context, "FAILED", event);
-  }
-}
-  
+  } 
+};
+
+
 // The delete function
 function deleteSpotFleet(properties, callback) {
 
   var aws = require("aws-sdk");
   var ec2 = new aws.EC2();
-
 
   return callback(null, ec2);
 }
@@ -74,8 +79,8 @@ function createSpotFleet(properties, callback) {
 
   return callback(null, ec2);
 }
-  
-  
+
+
 // Send response to the pre-signed S3 URL 
 function sendResponse(event, context, responseStatus, responseData, err) {
     console.log("Sending response " + responseStatus);
