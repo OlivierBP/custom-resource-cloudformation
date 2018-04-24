@@ -1,0 +1,22 @@
+# Prototype to create a custom resource with CloudFormation
+# https://github.com/OlivierBP/CustomResource_CloudFormation
+# Created 2018-03-28 by BAL-PETRE Olivier
+# License MIT 
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  Prototype to create a custom resource with CloudFormation
+
+
+Resources:   
+  
+
+  SpotFleet:
+    Type: 'Custom::SpotFleet'
+    Version: "1.0"
+    Properties:
+      ServiceToken: arn:aws:lambda:eu-west-1:912175495967:function:LambdaCustomResourceSpotFleet
+      test: testparameter
+      testb:
+        testc: parameterc
+      
